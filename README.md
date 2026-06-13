@@ -1,4 +1,4 @@
-# ENV Guard
+# Envfy
 
 A simple and type-safe environment variable validator for Node.js applications.
 
@@ -13,20 +13,20 @@ A simple and type-safe environment variable validator for Node.js applications.
 ## Installation
 
 ```bash
-npm install env-guard
+npm install envfy
 ```
 
 ## Why env-guard?
 Environment variables are always strings and error-prone.
 
-`env-guard` ensures your app:
+`envfy` ensures your app:
 - validates config at startup
 - fails fast if something is wrong
 - reduces runtime bugs caused by bad env values
 
 ## Usage
 ```ts
-import { validateEnv } from "env-guard";
+import { validateEnv } from "envfy";
 
 const env = validateEnv({
   PORT: "number",
@@ -75,7 +75,7 @@ Planned features:
 - tsup
 
 ## License
-MIT
+<a href="https://github.com/yasserfedsi/envfy/blob/main/LICENSE" target="_blank" style="">MIT</a>
 
 ## Contributing
 This is an early-stage open source project.
