@@ -1,28 +1,51 @@
-import { parseNumber, parseBoolean, parseString } from "../src/validators";
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, beforeEach } from "vitest";
+import { validateEnv } from "../src";
 
-describe("validators", () => {
-  test("parses number", () => {
-    expect(parseNumber("PORT", "3000")).toBe(3000);
+describe("validateEnv", () => {
+  test("validates string", () => {
+    process.env.NAME = "Ahmed";
+
+    const env = validateEnv({
+      NAME: "string",
+    });
+
+    expect(env.NAME).toBe("Ahmed");
   });
 
-  test("throws on invalid number", () => {
-    expect(() => parseNumber("PORT", "abc")).toThrow();
+  test("validates number", () => {
+    process.env.PORT = "3000";
+
+    const env = validateEnv({
+      PORT: "number",
+    });
+
+    expect(env.PORT).toBe(3000);
   });
 
-  test("parses true", () => {
-    expect(parseBoolean("DEBUG", "true")).toBe(true);
+  test("validates boolean", () => {
+    process.env.DEBUG = "true";
+
+    const env = validateEnv({
+      DEBUG: "boolean",
+    });
+
+    expect(env.DEBUG).toBe(true);
   });
 
-  test("parses false", () => {
-    expect(parseBoolean("DEBUG", "false")).toBe(false);
-  });
+  test("throws when missing", () => {
+    delete process.env.MISSING;
 
-  test("throws on invalid boolean", () => {
-    expect(() => parseBoolean("DEBUG", "yes")).toThrow();
+    expect(() => {
+      validateEnv({
+        MISSING: "string",
+      });
+    }).toThrow();
   });
+});
 
-  test("returs string", () => {
-    expect(parseString("hello")).toBe("hello");
-  });
+beforeEach(() => {
+  delete process.env.NAME;
+  delete process.env.PORT;
+  delete process.env.DEBUG;
+  delete process.env.MISSING;
 });
