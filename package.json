@@ -1,6 +1,7 @@
 {
   "name": "env-guard",
   "version": "1.0.0",
+  "description": "A simple, type-safe environment variable validator for Node.js applications",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -11,10 +12,17 @@
     "dev": "vitest",
     "prepublishOnly": "npm run build"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "keywords": [
+    "env",
+    "environment",
+    "validation",
+    "node",
+    "typescript",
+    "config",
+    "dotenv"
+  ],
+  "author": "Yasser Fedsi <fedsi.yasser@gmail.com>",
+  "license": "MIT",
   "devDependencies": {
     "@types/node": "^25.9.3",
     "tsup": "^6.5.0",
