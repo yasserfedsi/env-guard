@@ -1,6 +1,6 @@
 {
   "name": "env-guard",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "type": "module",
   "main": "./dist/index.cjs",
   "module": "./dist/index.js",
@@ -9,15 +9,16 @@
     "build": "tsup src/index.ts --format esm,cjs --dts",
     "test": "vitest",
     "dev": "vitest",
-    "prepublishOnly": "bun run build"
+    "prepublishOnly": "npm run build"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
   "devDependencies": {
-    "@types/bun": "latest",
     "@types/node": "^25.9.3",
     "tsup": "^8.5.1",
+    "typescript": "^5.9.3",
     "vitest": "^4.1.8"
-  },
-  "peerDependencies": {
-    "typescript": "^6.0.3"
   }
 }
