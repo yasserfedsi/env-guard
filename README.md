@@ -16,7 +16,7 @@ A simple and type-safe environment variable validator for Node.js applications.
 npm install envfy
 ```
 
-## Why env-guard?
+## Why envfy?
 Environment variables are always strings and error-prone.
 
 `envfy` ensures your app:
