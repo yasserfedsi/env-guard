@@ -1,3 +1,4 @@
+import { EnvValidationError } from "./errors/validationErrors";
 import {
   parseBoolean,
   parseNumber,
@@ -11,6 +12,8 @@ export type EnumType = readonly string[];
 
 export type Schema = Record<string, PrimitiveType | EnumType>;
 
+const errors: string[] = [];
+
 export function validateEnv(schema: Schema) {
   const result: Record<string, unknown> = {};
 
@@ -23,24 +26,36 @@ export function validateEnv(schema: Schema) {
       throw new Error(`Missing environment variable: ${key}`);
     }
 
-    if (Array.isArray(rule)) {
-      result[key] = parseEnum(key, value, rule);
-      continue;
+    try {
+      if (Array.isArray(rule)) {
+        result[key] = parseEnum(key, value, rule);
+        continue;
+      }
+
+      switch (rule) {
+        case "string":
+          result[key] = parseString(value);
+          break;
+
+        case "number":
+          result[key] = parseNumber(key, value);
+          break;
+
+        case "boolean":
+          result[key] = parseBoolean(key, value);
+          break;
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        errors.push(error.message);
+      } else {
+        errors.push(`Unknown validation error for ${key}`);
+      }
     }
+  }
 
-    switch (rule) {
-      case "string":
-        result[key] = parseString(value);
-        break;
-
-      case "number":
-        result[key] = parseNumber(key, value);
-        break;
-
-      case "boolean":
-        result[key] = parseBoolean(key, value);
-        break;
-    }
+  if (errors.length > 0) {
+    throw new EnvValidationError(errors);
   }
 
   return result;
